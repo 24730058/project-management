@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -42,6 +43,9 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 
 app.use(express.static(`${__dirname}/public`));
+
+// tiny mce
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // Router
 routeAdmin(app);
