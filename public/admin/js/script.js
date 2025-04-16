@@ -187,3 +187,53 @@ if(uploadImage) {
 
 // end upload image
 
+// sort
+
+const sort = document.querySelector('[sort]');
+
+if(sort) {
+    let url = new URL(window.location.href);
+    const sortSelect = sort.querySelector('[sort-select]');
+    const sortClear = sort.querySelector('[sort-clear]');
+
+    // sap xep
+    sortSelect.addEventListener('change', (e) => {
+        const value = e.target.value;
+        const [sortKey, sortValue] = value.split('-');
+
+        url.searchParams.set('sortKey', sortKey);
+        url.searchParams.set('sortValue', sortValue);
+
+        window.location.href = url.href;
+    })
+
+    // clear sap xep
+
+    sortClear.addEventListener('click', () => {
+        url.searchParams.delete('sortKey');
+        url.searchParams.delete('sortValue');
+        console.log(url.href);
+        window.location.href = url.href;
+    })
+
+    // them selected cho option
+    const sortKey = url.searchParams.get('sortKey');
+    const sortValue = url.searchParams.get('sortValue');
+    if(sortKey && sortValue) {
+        const sortOption = sortSelect.querySelector(`option[value="${sortKey}-${sortValue}"]`);
+        if(sortOption) {
+            sortOption.selected = true;
+        }
+    } else {
+        const sortOption = sortSelect.querySelector('option[value="position-desc"]');
+        if(sortOption) {
+            sortOption.selected = true;
+        }
+    }
+
+    // End them selected cho option
+
+}
+
+// end sort
+
