@@ -7,9 +7,13 @@ const Role = require('../../models/role.model');
 const systemConfig = require('../../config/system')
 
 module.exports.login = (req, res) => {
-    res.render('admin/pages/auth/login', {
-        pageTitle: 'Trang đăng nhập'
-    });
+    if (req.cookies.token) {
+        return res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    } else {
+        res.render('admin/pages/auth/login', {
+                pageTitle: 'Trang đăng nhập'
+            });
+    }
 };
 
 // [POST] /admin/auth/login
