@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const generate = require('../helpers/generate');
 
 const accountSchema = new mongoose.Schema({
-    fullname: String,
+    fullName: String,
     email: String,
     password: String,
     token: {
@@ -11,6 +11,8 @@ const accountSchema = new mongoose.Schema({
     },
     phone: String,
     avatar: String,
+    role_id: String,
+    status: String,
     deleted: {
         type: Boolean,
         default: false

@@ -1,4 +1,4 @@
-const Role = require('../../models/role.models');
+const Role = require('../../models/role.model.js');
 const systemConfig = require('../../config/system.js');
 
 // [GET] /admin/roles
