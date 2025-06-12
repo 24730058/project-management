@@ -8,6 +8,7 @@ const createTreeHelper = require('../../helpers/createTree.js');
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationHelper = require('../../helpers/pagination');
+const Account = require('../../models/account.model.js');
 
 
 // [GET] /admin/products
@@ -201,6 +202,10 @@ module.exports.createPost = async (req, res) => {
         req.body.position = countProducts + 1;
     } else {
         req.body.position = parseInt(req.body.position);
+    }
+
+    req.body.createdBy = {
+        account_id: res.locals.user.id
     }
 
     const product = new Product(req.body);

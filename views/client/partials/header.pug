@@ -1,3 +1,5 @@
+include ../mixins/sub-menu.pug
+
 header.header 
     .container 
         .row.align-items-center 
@@ -7,9 +9,12 @@ header.header
                         img(src="/img/logo.svg", alt="Logo")
                     
             .col-9
-                .inner-menu 
-                    ul 
-                        li 
-                            a(href="/") Trang chu 
-                        li 
-                            a(href="/products") San pham  
+                .inner-menu
+                    ul
+                        li
+                            a(href="/") Trang chủ
+                        li(class="sub-menu")
+                            -const pathProduct = '/products'
+                            a(href=pathProduct) Sản phẩm
+                            +sub-menu(layoutProductsCategory, pathProduct)
+                               
