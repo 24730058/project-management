@@ -22,7 +22,6 @@ module.exports.create = async (req, res) => {
 };
 // [POST] /admin/roles/create
 module.exports.createPost = async (req, res) => {
-    console.log(req.body);
 
     const record = new Role(req.body);
     await record.save();

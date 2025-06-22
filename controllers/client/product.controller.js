@@ -94,7 +94,6 @@ module.exports.category = async (req, res) => {
         });
     } catch (error) {
         // Xử lý lỗi
-        console.error(error);
         req.flash('error', 'Có lỗi xảy ra!');
         res.redirect('/products');
     }
