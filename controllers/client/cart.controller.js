@@ -2,6 +2,7 @@ const Cart = require('../../models/cart.model.js');
 const Product = require('../../models/product.model.js');
 
 const productHelper = require('../../helpers/products.js');
+
 // [GET] /cart
 module.exports.index = async (req, res) => {
     const cartId = req.cookies.cartId;
