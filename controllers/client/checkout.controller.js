@@ -83,8 +83,9 @@ module.exports.order = async (req, res) => {
 
 // [POST] /checkout/success/:orderId
 module.exports.success = async (req, res) => {
+
     res.render('client/pages/checkout/success', {
         pageTitle: 'Đặt hàng thành công',
-        // orderId: req.params.orderId
+        orderId: req.params.orderId
     });
 }
