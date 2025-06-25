@@ -29,14 +29,14 @@ module.exports.registerPost = async (req, res) => {
     fullName: user.fullName,
     email: user.email,
     password: md5(user.password),
-    token: generateHelper.generateRandomString(30),
+    tokenUser: generateHelper.generateRandomString(30),
     status: "active"
   };
 
   const newUser = new User(dataUser);
   await newUser.save();
 
-  res.cookie("tokenUser", newUser.token);
+  res.cookie("tokenUser", newUser.tokenUser);
 
   req.flash("success", "Đăng ký tài khoản thành công!");
 
@@ -84,10 +84,16 @@ module.exports.loginPost = async (req, res) => {
     return;
   }
 
-  res.cookie("tokenUser", existUser.token);
+  res.cookie("tokenUser", existUser.tokenUser);
 
   req.flash("success", "Đăng nhập thành công!");
 
   res.redirect("/");
 };
 
+// [GET] /user/logout
+module.exports.logout = async (req, res) => {
+  res.clearCookie("tokenUser");
+  req.flash("success", "Đã đăng xuất!");
+  res.redirect("/");
+};
