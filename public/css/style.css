@@ -237,3 +237,14 @@
     cursor: pointer;
   }
   /* end show alert */
+
+  /* End product-detail */
+
+  /* alert-message */
+  .alert-message {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 9999;
+}
+  /* End alert-message */
