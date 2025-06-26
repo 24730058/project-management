@@ -1,5 +1,6 @@
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model.js");
+const Cart = require("../../models/cart.model");
 
 const md5 = require("md5");
 
@@ -79,7 +80,6 @@ module.exports.loginPost = async (req, res) => {
 
     return;
   }
-
   if(existUser.status != "active") {
     req.flash("error", "Tài khoản đang bị khóa!");
 
@@ -87,7 +87,40 @@ module.exports.loginPost = async (req, res) => {
 
     return;
   }
-
+  // Kiểm tra và xử lý giỏ hàng của người dùng
+  const userCart = await Cart.findOne({
+    user_id: existUser.id
+  });
+  
+  if(userCart) {
+    // Người dùng đã có giỏ hàng từ trước
+    if(req.cookies.cartId) {
+      // Có giỏ hàng trong cookie, hợp nhất 2 giỏ hàng
+      const currentCart = await Cart.findOne({
+        _id: req.cookies.cartId
+      });
+      
+      if(currentCart && currentCart.products.length > 0) {
+        // Thêm sản phẩm từ giỏ hàng hiện tại vào giỏ hàng người dùng
+        await Cart.updateOne(
+          { _id: userCart._id },
+          { $push: { products: { $each: currentCart.products } } }
+        );
+        
+        // Xóa giỏ hàng hiện tại
+        await Cart.deleteOne({ _id: req.cookies.cartId });
+      }
+    }
+    // Gán cookie cartId thành giỏ hàng của người dùng
+    res.cookie("cartId", userCart.id);
+  } else if(req.cookies.cartId) {
+    // Người dùng chưa có giỏ hàng, gán giỏ hàng hiện tại cho người dùng
+    await Cart.updateOne(
+      { _id: req.cookies.cartId },
+      { user_id: existUser.id }
+    );
+  }
+  
   res.cookie("tokenUser", existUser.tokenUser);
 
   req.flash("success", "Đăng nhập thành công!");
@@ -97,7 +130,9 @@ module.exports.loginPost = async (req, res) => {
 
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
+
   res.clearCookie("tokenUser");
+  res.clearCookie("cartId");
   req.flash("success", "Đã đăng xuất!");
   res.redirect("/");
 };

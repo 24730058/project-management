@@ -24,13 +24,12 @@ module.exports.index = async (req, res) => {
             item.productInfo = productInfo;
             item.totalPrice = item.quantity * productInfo.priceNew;
         }
-    }
+    }    cart.totalPrice = cart.products.reduce((total, item) => total + item.totalPrice, 0);
 
-    cart.totalPrice = cart.products.reduce((total, item) => total + item.totalPrice, 0);
-
-    res.render('client/pages/cart/index');
-    pageTitle = 'Giỏ hàng';
-    cartDetail = cart;
+    res.render('client/pages/cart/index', {
+        pageTitle: 'Giỏ hàng',
+        cartDetail: cart
+    });
 }
 
 
@@ -127,4 +126,3 @@ module.exports.update = async (req, res) => {
     req.flash('success', 'Cập nhập số lượng sản phẩm thành công');
     res.redirect(req.get("referer"));
 }
-

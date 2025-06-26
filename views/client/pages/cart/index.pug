@@ -19,9 +19,9 @@ block main
                             th Giá
                             th Số lượng
                             th Tổng tiền
-                            th Hành động
+                            th Hành động                    
                     tbody
-                        if(cartDetail.products.length > 0)
+                        if(cartDetail && cartDetail.products && cartDetail.products.length > 0)
                             each item, index in cartDetail.products
                                 tr
                                     td #{index + 1}
@@ -43,10 +43,9 @@ block main
                                     td 
                                         a(href=`/cart/delete/${item.product_id}`, class="btn btn-danger") Xóa
 
-                h3(class='text-right') Tổng tiền: #{cartDetail.totalPrice}$
+                h3(class='text-right') Tổng tiền: #{cartDetail && cartDetail.totalPrice ? cartDetail.totalPrice : 0}$
 
                 div(class="text-right mt-3")
                     a(href="/checkout", class="btn btn-success") Thanh toán
             
     script(src="/js/cart.js") 
-
