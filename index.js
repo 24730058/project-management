@@ -39,6 +39,17 @@ app.use(session({cookie: { maxAge: 60000 }}));
 app.use(flash());
 // END FLASH MESSAGE
 
+// socket.io
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id);
+});
+// end socket.io
+
+
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 
@@ -58,6 +69,6 @@ app.use((req, res) => {
     });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
