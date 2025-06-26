@@ -29,4 +29,5 @@ module.exports = (app) => {
     app.use('/checkout', checkoutRoute);
 
     app.use('/user', userRoute);
+
 }

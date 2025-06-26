@@ -51,6 +51,13 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 routeAdmin(app);
 route(app);
 
+// 404 handler - this should be the last route
+app.use((req, res) => {
+    res.status(404).render("client/pages/error/404", {
+      pageTitle: "404 Not Found",
+    });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

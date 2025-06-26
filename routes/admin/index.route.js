@@ -32,10 +32,9 @@ module.exports = (app) => {
 
     app.use(PATH_ADMIN + '/accounts',
         authMiddleware.requireAuth,
-         accountsRoute);
-
+         accountsRoute);    
+         
     app.use(PATH_ADMIN + '/auth', authRoute);
-
 
 
 }

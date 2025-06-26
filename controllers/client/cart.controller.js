@@ -33,8 +33,6 @@ module.exports.index = async (req, res) => {
 }
 
 
-
-
 // [POST] /cart/add/:productId
 module.exports.addPost = async (req, res) => {
     const cartId = req.cookies.cartId;
